@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend  # Path to your FastAPI app
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - ./backend:/app  # Mount the backend directory to /app in the container
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: thumbnail_feedback
+      MYSQL_USER: newuser
+      MYSQL_PASSWORD: newpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
+  frontend:
+    build:
+      context: ./frontend  # Path to your React app
+    ports:
+      - "3000:80"  # Map port 3000 on your host to port 80 in the container
+    volumes:
+      - ./frontend:/app  # Optional: Mount the frontend directory to /app in the container

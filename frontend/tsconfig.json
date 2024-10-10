@@ -1,0 +1,16 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "jsx": "react-jsx",  // Add this line
+    "allowJs": true,     // Allow JavaScript files (if necessary)
+    "strict": true       // Optional: enables all strict type-checking options
+  }
+}
